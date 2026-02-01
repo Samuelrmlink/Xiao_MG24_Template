@@ -21,7 +21,6 @@ sudo apt upgrade
 sudo apt install --no-install-recommends git cmake ninja-build gperf ccache dfu-util device-tree-compiler wget python3-dev python3-venv python3-tk xz-utils file make gcc gcc-multilib g++-multilib libsdl2-dev libmagic1
 ```
 
-You can either install the Generic Zephyr Workspace - which will download all of the platforms that zephyr supports
 
 Install Zephyr Workspace (Generic)
 
@@ -40,22 +39,6 @@ west sdk install
 west blobs fetch
 ```
 
-Install Zephyr Workspace (Silicon Labs only)
-
-```bash
-mkdir ~/zephyrproject
-python3 -m venv ~/zephyrproject/.venv
-source ~/zephyrproject/.venv/bin/activate
-pip install west
-west init -m https://github.com/SiliconLabsSoftware/zephyr-silabs --mr v2025.12.0 ~/zephyrproject
-cd ~/zephyrproject
-west update
-west zephyr-export
-west packages pip --install
-cd ~/zephyrproject/zephyr-silabs
-west sdk install -t arm-zephyr-eabi
-west blobs fetch
-```
 
 Install OpenOCD fork (includes support for CMSIS-DAPv2 and EFRMG24)
 
@@ -71,12 +54,14 @@ make install
 # Optionally: rm -rf ~/zephyrproject/tools/src-openocd
 ```
 
+
 Download this project into your Zephyr Workspace
 
 ```bash
 cd ~/zephyrproject
 git clone https://github.com/Samuelrmlink/Xiao_MG24_Template.git Xiao_test
 ```
+
 
 ## Build Project
 
@@ -90,11 +75,13 @@ west build -b xiao_mg24 --pristine --sysbuild Xiao_test -- -DEXTRA_CONF_FILE="ov
 west flash --openocd=/home/samuel/.platformio/packages/tool-openocd/bin/openocd --openocd-search=/home/samuel/.platformio/packages/tool-openocd/share/openocd/scripts/
 ```
 
+
 Flash Project
 
 ```bash
 west flash --openocd=$HOME/zephyrproject/tools/openocd/bin/openocd --openocd-search=$HOME/zephyrproject/tools/openocd/share/openocd/scripts/
 ```
+
 
 OTA Project via nRF Connect App
 * Copy the '~/zephyrproject/build/Xiao_test/zephyr/zephyr.signed.bin' to your iOS/Android phone
